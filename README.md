@@ -109,3 +109,16 @@ GROUP BY CO.customer_id
 |     103      |     3      |      1      |
 |     104      |     3      |      0      |
 |     105      |     0      |      1      |
+
+## [Question #6](#case-study-questions)
+> What was the maximum number of pizzas delivered in a single order??
+```sql
+SELECT 
+	CO.customer_id,
+	SUM(CASE WHEN PN.pizza_name LIKE 'Meatlovers' THEN 1 ELSE 0 END) Meatlovers,
+	SUM(CASE WHEN PN.pizza_name LIKE 'Meatlovers' THEN 0 ELSE 1 END) Vegetarian
+FROM pizza_runner.customer_orders CO
+INNER JOIN pizza_runner.pizza_names PN
+	ON CO.pizza_id=PN.pizza_id
+GROUP BY CO.customer_id
+```
