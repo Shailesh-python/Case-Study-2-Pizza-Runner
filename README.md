@@ -1,5 +1,7 @@
 # Case Study 2 Pizza Runner
 
+![image](https://github.com/Shailesh-python/Case_Study_2_Pizza_Runner/blob/main/Pizza%20Runner%20Challenge.png)
+
 The following are my solutions to the Case Study 2 Pizza Runner questions in 
 [Danny Ma's Serious SQL course](https://www.datawithdanny.com/ "Data With Danny")
 <br/>
