@@ -5,7 +5,7 @@ The following are my solutions to the Case Study 2 Pizza Runner questions in
 <br/>
 <br/>
 Danny has shared with you 6 key datasets for this case study :
-[Data Set](https://github.com/Shailesh-python/Case_Study_1_Dannys_Diner/blob/main/Data%20And%20Tables)
+[Data Set](https://github.com/Shailesh-python/Case_Study_2_Pizza_Runner/blob/main/Datasets%20and%20Tables)
 <br/>
 - `runners`
 - `customer_orders`
