@@ -154,3 +154,27 @@ GROUP BY CO.customer_id
 |     103      |     3              |      0      |
 |     104      |     1              |      2      |
 |     105      |     0              |      1      |
+
+## [Question #7](#case-study-questions)
+> How many pizzas were delivered that had both exclusions and extras?
+```sql
+WITH CTE AS
+(
+SELECT 
+	CO.order_id,
+	(CASE WHEN CO.exclusions IS NULL OR CO.exclusions ='' OR CO.exclusions='NULL' THEN 0 ELSE 1 END) AS Has_exclusion,
+	(CASE WHEN CO.extras IS NULL OR CO.extras ='' OR CO.extras='NULL' THEN 0 ELSE 1 END) AS Has_extras
+FROM pizza_runner.customer_orders co
+INNER JOIN pizza_runner.runner_orders ro
+	ON co.order_id = ro.order_id
+WHERE (ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation')
+	OR ro.cancellation IS NULL
+	OR ro.cancellation ='null')
+)
+	SELECT COUNT(DISTINCT CTE.order_id) AS both_extras_exclusion
+	FROM CTE
+	WHERE CTE.Has_exclusion=1 AND CTE.Has_extras = 1;
+```
+| both_extra_exclusion  | 
+|-----------------------|
+|     1                 |
