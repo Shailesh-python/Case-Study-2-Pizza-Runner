@@ -24,7 +24,7 @@ Danny has shared with you 6 key datasets for this case study :
 ```sql
 SELECT 
 	COUNT(order_id) AS total_orders
-FROM pizza_runner.customer_orders
+FROM pizza_runner.customer_orders;
 ```
 | total_orders |
 |--------------|
@@ -35,7 +35,7 @@ FROM pizza_runner.customer_orders
 ```sql
 SELECT 
   COUNT(DISTINCT order_id) AS total_orders
-FROM pizza_runner.customer_orders
+FROM pizza_runner.customer_orders;
 ```
 | total_orders |
 |--------------|
@@ -54,7 +54,7 @@ SELECT
 	     END
 	    ) AS Delivered 
 FROM pizza_runner.runner_orders o
-GROUP BY o.runner_id
+GROUP BY o.runner_id;
 ```
 | runner_id | successful_orders |
 |-----------|-------------------|
@@ -85,7 +85,7 @@ GROUP BY CO.pizza_id
 		pizza_name,
 		delivered_pizza_count
 	FROM CTE INNER JOIN pizza_runner.pizza_names PN 
-		ON CTE.pizza_id = PN.pizza_id
+		ON CTE.pizza_id = PN.pizza_id;
 ```
 | pizza_name  | delivered_pizza_count |
 |-----------  |-----------------------|
@@ -102,7 +102,7 @@ SELECT
 FROM pizza_runner.customer_orders CO
 INNER JOIN pizza_runner.pizza_names PN
 	ON CO.pizza_id=PN.pizza_id
-GROUP BY CO.customer_id
+GROUP BY CO.customer_id;
 ```
 | customer_id  | Meatlovers | Vegetarians |
 |--------------|------------|-------------|
@@ -126,13 +126,13 @@ WHERE ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation')
 	OR ro.cancellation IS NULL
 	OR ro.cancellation ='null'
 GROUP BY co.order_id
-ORDER BY pizza_delivered DESC
+ORDER BY pizza_delivered DESC;
 ```
 | order_id  | pizza_delivered |
 |-----------|-----------------|
 | 4         |       3         |
 
-## [Question #6](#case-study-questions)
+## [Question #7](#case-study-questions)
 > For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 ```sql
 SELECT 
@@ -145,7 +145,7 @@ INNER JOIN pizza_runner.runner_orders ro
 WHERE ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation')
 	OR ro.cancellation IS NULL
 	OR ro.cancellation ='null'
-GROUP BY CO.customer_id
+GROUP BY CO.customer_id;
 ```
 | customer_id  | atleast_one_change | no_change   |
 |--------------|--------------------|-------------|
@@ -155,7 +155,7 @@ GROUP BY CO.customer_id
 |     104      |     1              |      2      |
 |     105      |     0              |      1      |
 
-## [Question #7](#case-study-questions)
+## [Question #8](#case-study-questions)
 > How many pizzas were delivered that had both exclusions and extras?
 ```sql
 WITH CTE AS
@@ -178,3 +178,21 @@ WHERE (ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation'
 | both_extra_exclusion  | 
 |-----------------------|
 |     1                 |
+
+## [Question #9](#case-study-questions)
+> What was the total volume of pizzas ordered for each hour of the day?
+```sql
+SELECT
+	DATEPART(HOUR,CO.order_time) as day_hour,
+	COUNT(CO.order_id) AS orders_per_hour
+FROM pizza_runner.customer_orders CO
+GROUP BY DATEPART(HOUR,CO.order_time);
+```
+| day_hour    | orders_per_hour       |
+|-------------|-----------------------|
+| 11          |       1               |
+| 13          |       3               |
+| 18          |       3               |
+| 19          |       1               |
+| 21          |       3               |
+| 23          |       3               |
