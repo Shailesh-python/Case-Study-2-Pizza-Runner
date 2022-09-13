@@ -115,19 +115,42 @@ GROUP BY CO.customer_id
 ## [Question #6](#case-study-questions)
 > What was the maximum number of pizzas delivered in a single order??
 ```sql
-select 
-	top 1
+SELECT 
+	TOP 1
 	co.order_id,
-	count(1) as pizza_delivered
-from pizza_runner.customer_orders co
-inner join pizza_runner.runner_orders ro
-	on co.order_id = ro.order_id
-where ro.cancellation not in ('Restaurant Cancellation','Customer Cancellation')
-	or ro.cancellation is null
-	or ro.cancellation ='null'
-group by co.order_id
-order by pizza_delivered desc
+	COUNT(1) AS pizza_delivered
+FROM pizza_runner.customer_orders co
+INNER JOIN pizza_runner.runner_orders ro
+	ON co.order_id = ro.order_id
+WHERE ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation')
+	OR ro.cancellation IS NULL
+	OR ro.cancellation ='null'
+GROUP BY co.order_id
+ORDER BY pizza_delivered DESC
 ```
 | order_id  | pizza_delivered |
 |-----------|-----------------|
 | 4         |       3         |
+
+## [Question #6](#case-study-questions)
+> For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
+```sql
+SELECT 
+	CO.customer_id,
+	SUM(CASE WHEN co.exclusions NOT IN ('null','') THEN 1 ELSE 0 END) AS atleast_one_change,
+	SUM(CASE WHEN co.exclusions IN ('null','') THEN 1 ELSE 0 END) AS no_change
+	FROM pizza_runner.customer_orders co
+INNER JOIN pizza_runner.runner_orders ro
+	ON co.order_id = ro.order_id
+WHERE ro.cancellation NOT IN ('Restaurant Cancellation','Customer Cancellation')
+	OR ro.cancellation IS NULL
+	OR ro.cancellation ='null'
+GROUP BY CO.customer_id
+```
+| customer_id  | atleast_one_change | no_change   |
+|--------------|--------------------|-------------|
+|     101      |     0              |      2      |
+|     102      |     0              |      3      |
+|     103      |     3              |      0      |
+|     104      |     1              |      2      |
+|     105      |     0              |      1      |
