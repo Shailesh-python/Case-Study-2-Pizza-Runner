@@ -115,12 +115,19 @@ GROUP BY CO.customer_id
 ## [Question #6](#case-study-questions)
 > What was the maximum number of pizzas delivered in a single order??
 ```sql
-SELECT 
-	CO.customer_id,
-	SUM(CASE WHEN PN.pizza_name LIKE 'Meatlovers' THEN 1 ELSE 0 END) Meatlovers,
-	SUM(CASE WHEN PN.pizza_name LIKE 'Meatlovers' THEN 0 ELSE 1 END) Vegetarian
-FROM pizza_runner.customer_orders CO
-INNER JOIN pizza_runner.pizza_names PN
-	ON CO.pizza_id=PN.pizza_id
-GROUP BY CO.customer_id
+select 
+	top 1
+	co.order_id,
+	count(1) as pizza_delivered
+from pizza_runner.customer_orders co
+inner join pizza_runner.runner_orders ro
+	on co.order_id = ro.order_id
+where ro.cancellation not in ('Restaurant Cancellation','Customer Cancellation')
+	or ro.cancellation is null
+	or ro.cancellation ='null'
+group by co.order_id
+order by pizza_delivered desc
 ```
+| order_id  | pizza_delivered |
+|-----------|-----------------|
+| 4         |       3         |
