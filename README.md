@@ -196,3 +196,19 @@ GROUP BY DATEPART(HOUR,CO.order_time);
 | 19          |       1               |
 | 21          |       3               |
 | 23          |       3               |
+
+## [Question #10](#case-study-questions)
+> What was the volume of orders for each day of the week?
+```sql
+SELECT
+	DATENAME(WEEKDAY,CO.order_time) as week_day,
+	COUNT(CO.order_id) AS orders_per_day
+FROM pizza_runner.customer_orders CO
+GROUP BY DATENAME(WEEKDAY,CO.order_time)
+```
+| week_day    | orders_per_day |
+|-------------|----------------|
+| Friday      |       1        |
+| Saturday    |       5        |
+| Thursday    |       3        |
+| Wednesday   |       5        |
