@@ -200,18 +200,19 @@ GROUP BY DATEPART(HOUR,CO.order_time);
 ## [Question #10](#case-study-questions)
 > What was the volume of orders for each day of the week?
 ```sql
-SELECT
-	DATENAME(WEEKDAY,CO.order_time) as week_day,
-	COUNT(CO.order_id) AS orders_per_day
-FROM pizza_runner.customer_orders CO
-GROUP BY DATENAME(WEEKDAY,CO.order_time)
+-- add 2 to adjust 1st day of the week as Monday
+SELECT 
+	FORMAT(DATEADD(DAY, 2, co.order_time),'dddd') AS day_of_week,
+	COUNT(co.order_id) AS total_pizzas_ordered
+FROM pizza_runner.customer_orders co
+GROUP BY FORMAT(DATEADD(DAY, 2, co.order_time),'dddd');
 ```
 | week_day    | orders_per_day |
 |-------------|----------------|
-| Friday      |       1        |
-| Saturday    |       5        |
-| Thursday    |       3        |
-| Wednesday   |       5        |
+| Friday      |       5        |
+| Monday      |       5        |
+| Saturday    |       3        |
+| Sunday      |       1        |
 
 ## Part B. Runner and Customer Experience
 
