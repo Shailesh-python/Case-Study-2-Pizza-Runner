@@ -212,3 +212,8 @@ GROUP BY DATENAME(WEEKDAY,CO.order_time)
 | Saturday    |       5        |
 | Thursday    |       3        |
 | Wednesday   |       5        |
+
+## Part B. Runner and Customer Experience
+
+## [Question #1](#case-study-questions)
+> How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
