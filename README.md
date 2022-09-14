@@ -218,3 +218,36 @@ GROUP BY FORMAT(DATEADD(DAY, 2, co.order_time),'dddd');
 
 ## [Question #1](#case-study-questions)
 > How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
+```sql
+SELECT 
+	DATEPART(WEEK, DATEDIFF(DD,-4,registration_date))-1 AS registration_week,
+	COUNT(runner_id) AS runner_signup
+FROM pizza_runner.runners
+GROUP BY DATEPART(WEEK, DATEDIFF(DD,-4,registration_date))-1;
+```
+| registration_week | runner_signup |
+|-------------------|---------------|
+| 1                 |       2       |
+| 2                 |       1       |
+| 3                 |       1       |
+
+## [Question #2](#case-study-questions)
+> What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
+```sql
+WITH CTE AS
+(
+SELECT 
+	DISTINCT
+	CO.order_id,
+	CO.order_time,
+	RO.pickup_time,
+	DATEDIFF(MINUTE, CO.order_time, RO.pickup_time) AS average_minutes
+FROM pizza_runner.customer_orders CO
+INNER JOIN pizza_runner.runner_orders RO
+ON CO.order_id = RO.order_id
+WHERE RO.pickup_time <> 'null'
+)	
+	SELECT ROUND(AVG(CTE.AVERAGE_MINUTES) * 1.0, 3) AS avg_pickup_minutes
+	FROM CTE 
+	WHERE CTE.AVERAGE_MINUTES > 0;
+```
