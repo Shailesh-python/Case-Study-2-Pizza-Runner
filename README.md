@@ -251,3 +251,12 @@ WHERE RO.pickup_time <> 'null'
 	FROM CTE 
 	WHERE CTE.AVERAGE_MINUTES > 0;
 ```
+| avg_pickup_minutes |
+|--------------------|
+|     16.0           |
+
+## [Question #2](#case-study-questions)
+> Is there any relationship between the number of pizzas and how long the order takes to prepare?
+```sql
+
+```
