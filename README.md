@@ -279,3 +279,25 @@ ORDER BY CO.order_id ASC;
 |     7    |     10       |      1      |
 |     8    |     21       |      1      |
 |     10   |     16       |      2      |
+
+## [Question #3](#case-study-questions)
+> Is there any relationship between the number of pizzas and how long the order takes to prepare?
+```sql
+SELECT 
+	co.customer_id,
+	AVG(
+	    CONVERT(DECIMAL(5,3),TRIM(REPLACE(ro.distance,'km','')))
+	   ) AS avg_distance
+FROM pizza_runner.customer_orders CO
+INNER JOIN pizza_runner.runner_orders RO
+	ON CO.order_id = RO.order_id
+WHERE ro.distance <> 'null'
+GROUP BY CO.customer_id;
+```
+| customer_id | avg_distance |
+|-------------|--------------|
+| 101         |       20     |
+| 102         |       16.73  |
+| 103         |       23.4   |
+| 104         |       10     |
+| 105         |       25     |
