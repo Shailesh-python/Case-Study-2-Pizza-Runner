@@ -266,15 +266,16 @@ FROM pizza_runner.customer_orders CO
 INNER JOIN pizza_runner.runner_orders RO
 ON CO.order_id = RO.order_id
 WHERE RO.pickup_time <> 'null'
-GROUP BY CO.order_id,DATEDIFF(MINUTE, CO.order_time, RO.pickup_time);
+GROUP BY CO.order_id,DATEDIFF(MINUTE, CO.order_time, RO.pickup_time)
+ORDER BY CO.order_id ASC;
 ```
 | order_id | diff_minutes | pizza_count |
 |----------|--------------|-------------|
-|     1    |     10       |      2      |
-|     2    |     10       |      3      |
-|     3    |     21       |      0      |
-|     4    |     30       |      2      |
+|     1    |     10       |      1      |
+|     2    |     10       |      1      |
+|     3    |     21       |      2      |
+|     4    |     30       |      3      |
 |     5    |     10       |      1      |
 |     7    |     10       |      1      |
 |     8    |     21       |      1      |
-|     10   |     16       |      1      |
+|     10   |     16       |      2      |
