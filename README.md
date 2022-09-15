@@ -361,4 +361,8 @@ WITH CTE AS
 ```
 ![image](https://github.com/Shailesh-python/Case_Study_2_Pizza_Runner/blob/main/pizza_runner%20B6.jpg)
 
+## [Question #7](#case-study-questions)
+> What is the successful delivery percentage for each runner?
+```sql
 
+```
