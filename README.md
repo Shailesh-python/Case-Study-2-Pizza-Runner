@@ -255,7 +255,7 @@ WHERE RO.pickup_time <> 'null'
 |--------------------|
 |     16.0           |
 
-## [Question #2](#case-study-questions)
+## [Question #3](#case-study-questions)
 > Is there any relationship between the number of pizzas and how long the order takes to prepare?
 ```sql
 SELECT 
@@ -280,8 +280,8 @@ ORDER BY CO.order_id ASC;
 |     8    |     21       |      1      |
 |     10   |     16       |      2      |
 
-## [Question #3](#case-study-questions)
-> Is there any relationship between the number of pizzas and how long the order takes to prepare?
+## [Question #4](#case-study-questions)
+> What was the average distance travelled for each customer?
 ```sql
 SELECT 
 	co.customer_id,
@@ -301,3 +301,36 @@ GROUP BY CO.customer_id;
 | 103         |       23.4   |
 | 104         |       10     |
 | 105         |       25     |
+
+## [Question #5](#case-study-questions)
+> What was the difference between the longest and shortest delivery times for all orders?
+```sql
+----- I will create a custom function to extract numeric part-------
+CREATE FUNCTION udf_GetNumeric(@input VARCHAR(256))
+RETURNS VARCHAR(256)
+AS
+BEGIN
+  DECLARE @intAlpha INT
+  SET @intAlpha = PATINDEX('%[^0-9]%', @input)
+  BEGIN
+    WHILE @intAlpha > 0
+    BEGIN
+      SET @input = STUFF(@input, @intAlpha, 1, '' )
+      SET @intAlpha = PATINDEX('%[^0-9]%', @input )
+    END
+  END
+  RETURN ISNULL(@input,0)
+END
+---------------------------------------
+
+SELECT
+	CAST(MAX(dbo.udf_GetNumeric(ro.duration)) AS INT) 
+	-  CAST(MIN(dbo.udf_GetNumeric(ro.duration)) AS INT) AS max_difference
+FROM pizza_runner.customer_orders CO
+INNER JOIN pizza_runner.runner_orders RO
+	ON CO.order_id = RO.order_id
+WHERE ro.distance <> 'null';
+```
+| max_difference |
+|----------------|
+| 30             |
