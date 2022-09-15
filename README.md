@@ -188,14 +188,14 @@ SELECT
 FROM pizza_runner.customer_orders CO
 GROUP BY DATEPART(HOUR,CO.order_time);
 ```
-| day_hour    | orders_per_hour       |
-|-------------|-----------------------|
-| 11          |       1               |
-| 13          |       3               |
-| 18          |       3               |
-| 19          |       1               |
-| 21          |       3               |
-| 23          |       3               |
+| day_hour    | orders_per_hour|
+|-------------|----------------|
+| 11          |       1        |
+| 13          |       3        |
+| 18          |       3        |
+| 19          |       1        |
+| 21          |       3        |
+| 23          |       3        |
 
 ## [Question #10](#case-study-questions)
 > What was the volume of orders for each day of the week?
@@ -258,5 +258,23 @@ WHERE RO.pickup_time <> 'null'
 ## [Question #2](#case-study-questions)
 > Is there any relationship between the number of pizzas and how long the order takes to prepare?
 ```sql
-
+SELECT 
+	CO.order_id,
+	DATEDIFF(MINUTE, CO.order_time, RO.pickup_time) AS diff_minutes,
+	COUNT(CO.order_id) as pizza_count
+FROM pizza_runner.customer_orders CO
+INNER JOIN pizza_runner.runner_orders RO
+ON CO.order_id = RO.order_id
+WHERE RO.pickup_time <> 'null'
+GROUP BY CO.order_id,DATEDIFF(MINUTE, CO.order_time, RO.pickup_time);
 ```
+| order_id | diff_minutes | pizza_count |
+|----------|--------------|-------------|
+|     1    |     10       |      2      |
+|     2    |     10       |      3      |
+|     3    |     21       |      0      |
+|     4    |     30       |      2      |
+|     5    |     10       |      1      |
+|     7    |     10       |      1      |
+|     8    |     21       |      1      |
+|     10   |     16       |      1      |
