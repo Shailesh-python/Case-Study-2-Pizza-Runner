@@ -322,7 +322,9 @@ BEGIN
   RETURN ISNULL(@input,0)
 END
 ---------------------------------------
-
+## [Question #5](#case-study-questions)
+> What was the difference between the longest and shortest delivery times for all orders?
+```sql
 SELECT
 	CAST(MAX(dbo.udf_GetNumeric(ro.duration)) AS INT) 
 	-  CAST(MIN(dbo.udf_GetNumeric(ro.duration)) AS INT) AS max_difference
@@ -334,3 +336,29 @@ WHERE ro.distance <> 'null';
 | max_difference |
 |----------------|
 | 30             |
+
+## [Question #6](#case-study-questions)
+> What was the difference between the longest and shortest delivery times for all orders?
+```sql
+WITH CTE AS
+(
+	SELECT 
+		co.customer_id,
+		AVG(CONVERT(DECIMAL(5,3),TRIM(REPLACE(ro.distance,'km','')))) AS total_distance,
+		AVG(CAST(dbo.udf_GetNumeric(ro.duration) AS INT)/60.00) AS total_time
+	FROM pizza_runner.customer_orders CO
+	INNER JOIN pizza_runner.runner_orders RO
+		ON CO.order_id = RO.order_id
+	WHERE ro.distance <> 'null'
+	GROUP BY CO.customer_id
+)	
+	SELECT 
+		CTE.customer_id,
+		CTE.total_distance,
+		CTE.total_time,
+		CTE.total_distance/CTE.total_time AS [avg_speed (kmh)]
+	FROM CTE
+```
+![image](https://github.com/Shailesh-python/Case_Study_2_Pizza_Runner/blob/main/Pizza%20Runner%20Challenge.png)
+
+
