@@ -359,6 +359,6 @@ WITH CTE AS
 		CTE.total_distance/CTE.total_time AS [avg_speed (kmh)]
 	FROM CTE
 ```
-![image](pizza_runner B6.jpg)
+![image](https://github.com/Shailesh-python/Case_Study_2_Pizza_Runner/blob/main/pizza_runner%20B6.jpg)
 
 
