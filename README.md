@@ -364,5 +364,16 @@ WITH CTE AS
 ## [Question #7](#case-study-questions)
 > What is the successful delivery percentage for each runner?
 ```sql
-
+SELECT 
+	t.runner_id,
+	(100 * COUNT(T.is_distance))/COUNT(*) as delievery_percentage
+FROM
+(
+SELECT 
+	ro.runner_id,
+	ro.distance,
+	CASE WHEN ro.distance = 'null' THEN NULL ELSE 0 END AS is_distance
+FROM pizza_runner.runner_orders ro
+) T
+group by t.runner_id
 ```
