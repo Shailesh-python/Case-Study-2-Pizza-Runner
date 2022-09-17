@@ -385,3 +385,8 @@ group by t.runner_id
 
 ## C. Ingredient Optimisation
 
+## [Question #1](#case-study-questions)
+> What are the standard ingredients for each pizza?
+```sql
+
+```
