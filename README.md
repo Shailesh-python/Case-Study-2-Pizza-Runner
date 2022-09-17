@@ -377,8 +377,8 @@ FROM pizza_runner.runner_orders ro
 ) T
 group by t.runner_id
 ```
-| runner_id | avg_distance |
-|-----------|--------------|
-| 1         |       100    |
-| 2         |       75     |
-| 3         |       50     |
+| runner_id | delievery_percentage|
+|-----------|---------------------|
+| 1         |       100           |
+| 2         |       75            |
+| 3         |       50            |
