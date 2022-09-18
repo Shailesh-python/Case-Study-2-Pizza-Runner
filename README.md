@@ -390,3 +390,8 @@ group by t.runner_id
 ```sql
 
 ```
+
+## [Question #2](#case-study-questions)
+> What was the most commonly added extra?
+```sql
+```
