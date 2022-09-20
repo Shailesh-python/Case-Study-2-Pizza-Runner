@@ -2,6 +2,8 @@
 
 <img src='https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)'/>
 
+![image](https://github.com/Shailesh-python/Case-Study-2-Pizza-Runner/blob/main/Pizza%20Runner%20Challenge.png)
+
 The following are my solutions to the Case Study 2 Pizza Runner questions in 
 [Danny Ma's Serious SQL course](https://www.datawithdanny.com/ "Data With Danny")
 <br/>
